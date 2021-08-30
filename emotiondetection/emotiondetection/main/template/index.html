@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Song-Sonic | The minor project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'><link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="wrap">
+        <div class="list-area">
+            <div class="side">
+                <div class="side__wrap side__nav">
+                    <ul class="nav">
+                        <li class="nav__list">
+                            <i class="nav__icon fas fa-home"></i>
+                            <p class="nav__text">Home</p>
+                        </li>
+                        <li class="nav__list">
+                            <i class="nav__icon far fa-user-circle"></i>
+                            <p class="nav__text">Sign in</p>
+                        </li>
+                        <li class="nav__list">
+                            <i class="nav__icon fas fa-broadcast-tower"></i>
+                            <p class="nav__text">Stream</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="side__wrap side__contents">
+                    <ul class="contents">
+                        <li>
+                            <ul class="contents__box">
+                                <li class="contents__list">Made For You</li>
+                                <li class="contents__list">Recently Played</li>
+                                <li class="contents__list">Liked Songs</li>
+                                <li class="contents__list">Albums</li>
+                                <li class="contents__list">Artists</li>
+                                <li class="contents__list">Podcasts</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="side__wrap side__new-list">
+                    <div class="new-list">
+                        <i class="new-list__icon far fa-times-circle"></i>
+                        <p class="new-list__text">New Playlist</p>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="main__wrap top-scroll-bg"></div>
+                <div class="main__wrap top-bar">
+                    <ul class="top-bar__left top-bar__wrap">
+                        <li class="top-bar__search">
+                            <i class="top-bar__search--icon top-bar__icon fas fa-search"></i>
+                            <input type="text" class="top-bar__search--input" placeholder="Search">
+                        </li>
+                    </ul>
+                    <ul class="top-bar__right top-bar__wrap">
+                        <li>Welcome</li>
+                    </ul>
+                </div>
+                <div class="main__wrap summary">
+                    <div class="summary__img"></div>
+                    <div class="summary__box">
+                        <div class="summary__text">
+                            <ul>
+                                <li>
+                                    <h1 class="summary__text--white">Hi! Your current mood is: {{c}}</h1>
+                                </li>
+                                <li>
+                                    <br><p class="will-hidden">Your weekly mixtape of fresh music. Based on your current mood and emotion, this project discovers and presents the songs you may like. Updated every Monday, so save your favorites!</p>
+                                </li>
+                                <li class="summary__text--by-spotify">
+                                    <p>Made for <span class="summary__text--white ">YOU</span> by <span
+                                            class="summary__text--white">Song-Sonic</span> &bull; 30 songs, 1 hr 49 min
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__wrap summary on">
+                    <div class="summary__img"></div>
+                    <div class="summary__box">
+                        <div class="summary__text">
+                            <ul>
+                                <li>
+                                    <strong class="summary__text--title">Discover Weekly</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="summary__button">
+                            <ul class="button">
+                                <li class="button__list button__play-btn">
+                                    <p class="button__text">PLAY</p>
+                                </li>
+                                <li class="button__list"><i class="button__icon far fa-heart"></i></li>
+                                <li class="button__list"><i class="button__icon fas fa-ellipsis-h"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__wrap">
+                    <table class="playlist">
+                        <colgroup>
+                            <col width="3%">
+                            <col width="3%">
+                            <col width="35%">
+                            <col width="23%">
+                            <col width="23%">
+                            <col width="7%">
+                            <col width="3%">
+                            <col width="3%">
+                        </colgroup>
+                        <tr class="playlist__tr">
+                            <th class="playlist__th"></th>
+                            <th class="playlist__th"></th>
+                            <th class="playlist__th">TITLE</th>
+                            <th class="playlist__th">ARTIST</th>
+                            <th class="playlist__th">ALBUM</th>
+                            <th class="playlist__th"><i class="far fa-calendar-alt"></i></th>
+                            <th class="playlist__th"></th>
+                            <th class="playlist__th"></th>
+                        </tr>
+                        {% for i in so %}
+                        <tr class="playlist__tr">
+                            <td class="playlist__td playlist__td--play"></td>
+                            <td class="playlist__td playlist__td--like"></td>
+                            <td class="playlist__td playlist__td--title">{{i.song_name}}</td>
+                            <td class="playlist__td playlist__td--artist">{{i.artist}}</td>
+                            <td class="playlist__td playlist__td--album">{{i.album}}</td>
+                            <td class="playlist__td playlist__td--album">{{i.upload_time.day}}/{{i.upload_time.month}}/{{i.upload_time.year}}</td>
+                            <td class="playlist__td playlist__td--dislike"></td>
+                            <td class="playlist__td playlist__td--more"></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="playbar">
+            {% static "" as baseUrl %}
+
+            <audio id="audio" controls style="display: none;">
+                <source src="{{ baseUrl }}media/{{name}}" type="audio/mpeg">
+            </audio>
+            <div class="album-cover">
+                <div class="album-cover__img"></div>
+                <div class="album-cover__text-box">
+                    <div class="album-cover__wrap">
+                        <p class="album-cover__title">{{psong_name}}</p>
+                    </div>
+                    <div>
+                        <p class="album-cover__artist">Now Playing!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="play-btns">
+            	{% csrf_token %}
+                <ul class="play-btns__wrap play-btns__icon-box">
+                    <li class="play-btns__list"><i class="play-btns__icon fas fa-random"></i></li>
+                    <li class="play-btns__list"><i class="play-btns__icon fas fa-step-backward"></i></li>
+                    <li class="play-btns__list play_btn"><i class="play_btn_icon play-btns__icon far fa-play-circle"></i></li>
+                    <li class="play-btns__list move_next_song"><i class="play-btns__icon fas fa-step-forward"></i></li>
+                    <li class="play-btns__list reset_btn"><i class="play-btns__icon fas fa-sync"></i></li>
+                </ul>
+                <ul class="play-btns__wrap play-btns__range-bar">
+                    <li class="current_timing">
+                        <p>0.00</p>
+                    </li>
+                    <li class="play-btns__bar">
+                        <div>
+                            <input type="range" id="aud_progress_slider" value="0" min="0" max="100">
+                        </div>
+                    </li>
+                    <li class="total_timing">
+                        <p>0.00</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="ect-btns">
+                <ul class="ect-btns__inner">
+                    <li class="ect-btns__list"><i class="ect-btns__icon fas fa-list"></i></li>
+                    <li class="ect-btns__list"><i class="ect-btns__icon fas fa-mobile-alt"></i></li>
+                    <li class="ect-btns__list ect-btns__list--volume">
+                        <i class="ect-btns__icon fas fa-volume-up"></i>
+                        <div class="ect-btns__bar">
+                            <input type="range" id="aud_controll_slider" value="100" min="0" max="100">
+                        </div>
+                    </li>
+                    <li class="ect-btns__list fullscreen_mode"><i class="ect-btns__icon fas fa-expand-alt"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="js-modal">
+        <div class="bg-area"></div>
+        <div class="modal">
+            <div>
+                <h1 class="modal__title">Create Playlist</h1>
+                <i class="modal__close-btn fas fa-times"></i>
+            </div>
+            <div class="modal__contents">
+                <div class="modal__image">
+                    <div class="modal__image--box">
+                        <i class="modal__image--icon fab fa-itunes-note"></i>
+                        <p>Choose image</p>
+                    </div>
+                </div>
+                <div class="modal__text-box">
+                    <div class="modal__name">
+                        <p class="modal__text">Name</p>
+                        <input type="text" class="modal__text-input" placeholder="My playlist #8">
+                    </div>
+                    <div>
+                        <p class="modal__text">Description</p>
+                        <textarea class="modal__text-area"
+                            placeholder="Give your playlist a catchy description."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal__btn">
+                <p class="modal__btn--text">CREATE</p>
+            </div>
+        </div>
+    </div>
+<!-- partial -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+	<script  src="{% static 'script.js' %}"></script>
+	<script>
+	    (function($){
+	        $.fn.next_song = function(options){
+	            var count = '{{count}}';
+	            var emotion='{{emotion}}';
+	            console.log(emotion);
+	            this.on('click', function(e){
+	                $.ajax({
+	                    url: "song_requests/",
+	                    method: "POST",
+	                    dataType: "json",
+	                    data: {value: 'next_music_req', count: count, h:emotion, csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()},
+	                    success: function(data){
+	                        console.log(data);
+	                        count = data.count;
+	                        $('#audio').html('<source src="{{ baseUrl }}media/'+data.name+'" type="audio/mpeg">');
+	                        $('.album-cover__wrap').html('<p class="album-cover__title">'+data.psong_name+'</p>');
+	                        audio.currentTime = 0;
+                            audio.load();
+                            audio.play();
+                            $('.play_btn').html('<i class="play_btn_icon play-btns__icon far fa-pause-circle"></i>');
+                            $('#aud_progress_slider').on('input', function (e) {
+                                var min = e.target.min,
+                                max = e.target.max,
+                                val = e.target.value;
+                                $(e.target).css({
+                                    'backgroundSize': (val - min) * 100 / (max - min) + '% 100%'
+                                });
+                                audio.currentTime = (((val - min) * 100 / (max - min))/100) * audio.duration;
+                            }).trigger('input');
+
+	                    }
+	                });
+		        });
+		    }
+		}(jQuery));
+	    $('.move_next_song').next_song();
+	</script>
+</body>
+</html>
